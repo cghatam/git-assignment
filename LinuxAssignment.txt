@@ -1,0 +1,84 @@
+[ec2-user@ip-172-31-31-66 ~]$
+[ec2-user@ip-172-31-31-66 ~]$ mkdir -p /home/ec2-user/webapp/scripts /home/ec2-user/webapp/logs /home/ec2-user/webapp/config
+[ec2-user@ip-172-31-31-66 ~]$ cat > /home/ec2-user/webapp/config/app.conf
+APP_NAME=WebApp
+PORT=8080
+[ec2-user@ip-172-31-31-66 ~]$ cat  /home/ec2-user/webapp/config/app.conf
+APP_NAME=WebApp
+PORT=8080
+[ec2-user@ip-172-31-31-66 ~]$ touch  /home/ec2-user/webapp/logs/app.log
+[ec2-user@ip-172-31-31-66 ~]$ chmod 755 /home/ec2-user/webapp/script
+chmod: cannot access '/home/ec2-user/webapp/script': No such file or directory
+[ec2-user@ip-172-31-31-66 ~]$ ls -l
+total 0
+drwxr-xr-x. 5 ec2-user ec2-user 47 May 20 17:55 webapp
+[ec2-user@ip-172-31-31-66 ~]$ chmod 755 /home/ec2-user/webapp/scripts
+[ec2-user@ip-172-31-31-66 ~]$ chmod 644 /home/ec2-user/webapp/config/app.conf
+[ec2-user@ip-172-31-31-66 ~]$ ls -l /home/ec2-user/webapp/
+total 0
+drwxr-xr-x. 2 ec2-user ec2-user 22 May 20 17:57 config
+drwxr-xr-x. 2 ec2-user ec2-user 21 May 20 17:59 logs
+drwxr-xr-x. 2 ec2-user ec2-user  6 May 20 17:55 scripts
+[ec2-user@ip-172-31-31-66 ~]$ sudo chown -R root:root /home/ec2-user/webapp/
+[ec2-user@ip-172-31-31-66 ~]$ ls -l /home/ec2-user/webapp/
+total 0
+drwxr-xr-x. 2 root root 22 May 20 17:57 config
+drwxr-xr-x. 2 root root 21 May 20 17:59 logs
+drwxr-xr-x. 2 root root  6 May 20 17:55 scripts
+[ec2-user@ip-172-31-31-66 ~]$ cd /home/ec2-user/webapp/scripts/
+[ec2-user@ip-172-31-31-66 scripts]$ vim log_user.sh
+[ec2-user@ip-172-31-31-66 scripts]$ ls
+log_user.sh
+[ec2-user@ip-172-31-31-66 scripts]$ ls -l
+total 4
+-rw-r--r--. 1 root root 206 May 20 18:17 log_user.sh
+[ec2-user@ip-172-31-31-66 scripts]$ chmod 755 log_user.sh
+chmod: changing permissions of 'log_user.sh': Operation not permitted
+[ec2-user@ip-172-31-31-66 scripts]$ sudo chown -R ec2-user:ec2-user /home/ec2-user/webapp/
+[ec2-user@ip-172-31-31-66 scripts]$ ls -l
+total 4
+-rw-r--r--. 1 ec2-user ec2-user 206 May 20 18:17 log_user.sh
+[ec2-user@ip-172-31-31-66 scripts]$ vim log_user.sh
+[ec2-user@ip-172-31-31-66 scripts]$ ls -l
+total 4
+-rw-r--r--. 1 ec2-user ec2-user 206 May 20 18:24 log_user.sh
+[ec2-user@ip-172-31-31-66 scripts]$ chmod 755 log_user.sh
+[ec2-user@ip-172-31-31-66 scripts]$ ./log_user.sh
+Enter your name: Chandrasekhar
+APP_NAME=WebApp
+PORT=8080
+Login: Chandrasekhar Date: Wed May 20 18:25:04 UTC 2026
+[ec2-user@ip-172-31-31-66 scripts]$ ./log_user.sh
+Enter your name: Samatha
+APP_NAME=WebApp
+PORT=8080
+Login: Chandrasekhar Date: Wed May 20 18:25:04 UTC 2026
+Login: Samatha Date: Wed May 20 18:25:16 UTC 2026
+[ec2-user@ip-172-31-31-66 scripts]$ ./log_user.sh
+Enter your name: AnanghaSahasra
+APP_NAME=WebApp
+PORT=8080
+Login: Chandrasekhar Date: Wed May 20 18:25:04 UTC 2026
+Login: Samatha Date: Wed May 20 18:25:16 UTC 2026
+Login: AnanghaSahasra Date: Wed May 20 18:25:33 UTC 2026
+[ec2-user@ip-172-31-31-66 scripts]$ ./log_user.sh
+Enter your name: Subrahmanya Mahadeva
+APP_NAME=WebApp
+PORT=8080
+Login: Chandrasekhar Date: Wed May 20 18:25:04 UTC 2026
+Login: Samatha Date: Wed May 20 18:25:16 UTC 2026
+Login: AnanghaSahasra Date: Wed May 20 18:25:33 UTC 2026
+Login: Subrahmanya Mahadeva Date: Wed May 20 18:25:48 UTC 2026
+[ec2-user@ip-172-31-31-66 scripts]$ ls
+log_user.sh
+[ec2-user@ip-172-31-31-66 scripts]$ cd ..
+[ec2-user@ip-172-31-31-66 webapp]$ ls
+config  logs  scripts
+[ec2-user@ip-172-31-31-66 webapp]$ cd logs/
+[ec2-user@ip-172-31-31-66 logs]$ ls
+app.log
+[ec2-user@ip-172-31-31-66 logs]$ cat app.log
+Login: Chandrasekhar Date: Wed May 20 18:25:04 UTC 2026
+Login: Samatha Date: Wed May 20 18:25:16 UTC 2026
+Login: AnanghaSahasra Date: Wed May 20 18:25:33 UTC 2026
+Login: Subrahmanya Mahadeva Date: Wed May 20 18:25:48 UTC 2026
