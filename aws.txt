@@ -1,0 +1,36 @@
+Vlancloud:
+728723627734
+ghatam.chandra+HV17@gmail.com
+SivaSi@18
+
+728723627734
+IAM user: chandrasekhar-devops
+Pwd: SivaS*18
+
+
+
+Bucket policy to assess public:
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+
+            "Effect": "Allow",
+
+            "Principal": "*",
+
+            "Action": "s3:GetObject",
+
+            "Resource": "arn:aws:s3:::YOUR-BUCKET-NAME/*"
+
+        }
+
+    ]
+
+}
+
+https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels
+
+
+ssh -i "Chandasekhar-keypair.pem" ubuntu@ec2-43-205-196-90.ap-south-1.compute.amazonaws.com
