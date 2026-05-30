@@ -1,0 +1,31 @@
+sudo adduser sarah
+sudo adduser mike
+
+# Create workspace for Sarah
+sudo mkdir -p /home/sarah/workspace
+
+# Create workspace for Mike
+sudo mkdir -p /home/mike/workspace
+
+sudo chown -R sarah:sarah /home/sarah/workspace
+sudo chown -R mike:mike /home/mike/workspace
+
+# Secure Sarah's home and workspace (700 = rwx------)
+sudo chmod 700 /home/sarah
+sudo chmod 700 /home/sarah/workspace
+
+# Secure Mike's home and workspace
+sudo chmod 700 /home/mike
+sudo chmod 700 /home/mike/workspace
+
+# login the sarah user
+su - Sarah
+# Access sarah folder
+ls /home/sarah
+#Now try to access the mike folder
+ls /home/mike 
+#Error message : Permission denied.
+
+#Enforce 30-day Expiration
+sudo chage -M 30 sarah
+sudo chage -M 30 mike
