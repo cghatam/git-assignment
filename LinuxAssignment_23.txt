@@ -1,0 +1,97 @@
+sudo mkdir -p /backups
+sudo chmod 777 /backups/
+nano /home/sarah/apache_backup.sh
+
+#!/bin/bash
+
+# Configuration
+SERVER_NAME="apache"
+BACKUP_DIR="/backups"
+DATE=$(date +%Y-%m-%d)
+FILENAME="${SERVER_NAME}_backup_${DATE}.tar.gz"
+LOG_FILE="${BACKUP_DIR}/backup_verification.log"
+
+# Target directories to back up (Adjust /etc/httpd to /etc/apache2 if on Ubuntu)
+TARGETS="/etc/httpd /var/www/html"
+
+echo "=== Backup Started: $(date) ===" >> $LOG_FILE
+
+# 1. Create Compressed Backup
+tar -czf ${BACKUP_DIR}/${FILENAME} $TARGETS 2>> $LOG_FILE
+
+# 2. Verify Backup Integrity
+if [ -f "${BACKUP_DIR}/${FILENAME}" ]; then
+    echo "SUCCESS: Backup created at ${BACKUP_DIR}/${FILENAME}" >> $LOG_FILE
+    echo "--- Integrity Verification (File Contents) ---" >> $LOG_FILE
+    tar -tzf ${BACKUP_DIR}/${FILENAME} >> $LOG_FILE
+    echo "Integrity Check Passed for ${FILENAME}" >> $LOG_FILE
+else
+    echo "ERROR: Backup creation failed for ${FILENAME}" >> $LOG_FILE
+fi
+
+echo -e "=== Backup Ended ===\n" >> $LOG_FILE
+
+##############################################################
+# Add execution Permission to the script
+chmod +x /home/sarah/apache_backup.sh
+
+#Switch to root user (Chandasekhar)
+#Add below line to run appliation as crontab job
+sudo crontab -u sarah -e
+
+#Mike's Backup Script
+vim /home/mike/nginx_backup.sh
+
+#!/bin/bash
+
+# Configuration
+SERVER_NAME="nginx"
+BACKUP_DIR="/backups"
+DATE=$(date +%Y-%m-%d)
+FILENAME="${SERVER_NAME}_backup_${DATE}.tar.gz"
+LOG_FILE="${BACKUP_DIR}/backup_verification.log"
+
+# Target directories to back up
+TARGETS="/etc/nginx /usr/share/nginx/html"
+
+echo "=== Backup Started: $(date) ===" >> $LOG_FILE
+
+# 1. Create Compressed Backup
+tar -czf ${BACKUP_DIR}/${FILENAME} $TARGETS 2>> $LOG_FILE
+
+# 2. Verify Backup Integrity
+if [ -f "${BACKUP_DIR}/${FILENAME}" ]; then
+    echo "SUCCESS: Backup created at ${BACKUP_DIR}/${FILENAME}" >> $LOG_FILE
+    echo "--- Integrity Verification (File Contents) ---" >> $LOG_FILE
+    tar -tzf ${BACKUP_DIR}/${FILENAME} >> $LOG_FILE
+    echo "Integrity Check Passed for ${FILENAME}" >> $LOG_FILE
+else
+    echo "ERROR: Backup creation failed for ${FILENAME}" >> $LOG_FILE
+fi
+
+echo -e "=== Backup Ended ===\n" >> $LOG_FILE
+
+####################################################
+chmod +x /home/mike/nginx_backup.sh
+
+sudo crontab -u mike -e
+0 0 * * 2 /home/mike/nginx_backup.sh
+
+#A. Backup Archives Created
+chandrasekhar@DESKTOP-62QQHHH:~$ ls -l /backups/
+total 8
+-rw-rw-r-- 1 sarah sarah  45 May 30 07:21 apache_backup_2026-05-30.tar.gz
+-rw-rw-r-- 1 sarah sarah 464 May 30 07:21 backup_verification.log
+
+
+#Verification Log Output
+sarah@DESKTOP-62QQHHH:~$ cat /backups/backup_verification.log
+=== Backup Started: Sat May 30 07:21:55 UTC 2026 ===
+tar: Removing leading `/' from member names
+tar: /etc/httpd: Cannot stat: No such file or directory
+tar: /var/www/html: Cannot stat: No such file or directory
+tar: Exiting with failure status due to previous errors
+SUCCESS: Backup created at /backups/apache_backup_2026-05-30.tar.gz
+--- Integrity Verification (File Contents) ---
+Integrity Check Passed for apache_backup_2026-05-30.tar.gz
+=== Backup Ended ===
